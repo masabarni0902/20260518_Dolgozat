@@ -1,0 +1,148 @@
+﻿<Window x:Class="Tanulok_WPF.EditStudentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tanulok_WPF"
+        mc:Ignorable="d"
+                Title="Tanuló Szerkesztése" Height="400" Width="440"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F0F4F8">
+
+    <Window.Resources>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,14"/>
+        </Style>
+
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0,0,0,14"/>
+        </Style>
+
+        <Style x:Key="SaveButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#2980B9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="24,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource SaveButton}">
+            <Setter Property="Background" Value="#95A5A6"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#2980B9" Padding="20,14">
+            <StackPanel>
+                <TextBlock Text="✎  Tanuló Adatainak Szerkesztése" FontSize="18" FontWeight="Bold"
+                           Foreground="White" FontFamily="Segoe UI"/>
+                <TextBlock Text="Módosítsd a kívánt mezőket, majd mentsd el!" FontSize="11"
+                           Foreground="#D6EAF8" FontFamily="Segoe UI" Margin="0,3,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,20,24,0">
+
+                <TextBlock Text="Tanuló neve" Style="{StaticResource LabelStyle}"/>
+                <TextBox Text="{Binding StudentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource InputStyle}"/>
+
+                <TextBlock Text="Osztály" Style="{StaticResource LabelStyle}"/>
+                <ComboBox x:Name="ClassCombo" Style="{StaticResource ComboStyle}">
+                    <ComboBoxItem>9.A</ComboBoxItem>
+                    <ComboBoxItem>9.B</ComboBoxItem>
+                    <ComboBoxItem>10.A</ComboBoxItem>
+                    <ComboBoxItem>10.B</ComboBoxItem>
+                    <ComboBoxItem>11.A</ComboBoxItem>
+                    <ComboBoxItem>11.B</ComboBoxItem>
+                    <ComboBoxItem>12.A</ComboBoxItem>
+                    <ComboBoxItem>12.B</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock Text="Matek jegy (1–5)" Style="{StaticResource LabelStyle}"/>
+                <ComboBox x:Name="MathCombo" Style="{StaticResource ComboStyle}"
+                          SelectionChanged="GradeCombo_SelectionChanged">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+
+                <TextBlock Text="Fizika jegy (1–5)" Style="{StaticResource LabelStyle}"/>
+                <ComboBox x:Name="PhysicsCombo" Style="{StaticResource ComboStyle}"
+                          SelectionChanged="GradeCombo_SelectionChanged">
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                </ComboBox>
+
+                <Border Background="#EBF5FB" CornerRadius="6" Padding="12,8" Margin="0,4,0,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Számított átlag: " FontFamily="Segoe UI" FontSize="13" Foreground="#555"/>
+                        <TextBlock x:Name="PreviewAvgBlock" Text="-" FontFamily="Segoe UI"
+                                   FontSize="14" FontWeight="Bold" Foreground="#2980B9"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="White" Padding="24,14" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Mégse" Style="{StaticResource CancelButton}" Margin="0,0,10,0"
+                        Click="CancelClick"/>
+                <Button Content="💾  Mentés" Style="{StaticResource SaveButton}"
+                        Click="SaveStudent"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
